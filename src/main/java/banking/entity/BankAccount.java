@@ -1,8 +1,8 @@
 package banking.entity;
 
-import exception.InsufficientFundsException;
+import banking.exception.InsufficientFundsException;
 
-public class BankAccount {
+public class BankAccount implements IBankAccount {
     private String accountNumber;
     private String accountHolderName;
     private double balance;
@@ -22,6 +22,15 @@ public class BankAccount {
         this.balance = balance;
     }
 
+    public double getBalance() {
+        return this.balance;
+    }
+
+    public void setBalance(double balance) {
+        this.balance = balance;
+    }
+
+    @Override
     public void deposit(double amount) {
         if (amount > 0) {
             this.balance += amount;
@@ -31,6 +40,7 @@ public class BankAccount {
         }
     }
 
+    @Override
     public void withdraw(double amount) {
         if ((amount <= 0) || (amount > this.balance)) {
             throw new InsufficientFundsException("Insufficient funds for withdrawal");
@@ -38,9 +48,5 @@ public class BankAccount {
         else {
             this.balance -= amount;
         }
-    }
-
-    public double getBalance() {
-        return this.balance;
     }
 }

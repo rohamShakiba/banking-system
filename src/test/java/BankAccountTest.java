@@ -2,7 +2,7 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Before;
 import org.junit.Test;
 import banking.entity.BankAccount;
-import exception.InsufficientFundsException;
+import banking.exception.InsufficientFundsException;
 
 public class BankAccountTest {
     private BankAccount account;

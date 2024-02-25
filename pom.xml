@@ -21,7 +21,6 @@
     </dependencies>
     <build>
         <plugins>
-            <!-- Maven Compiler Plugin Configuration -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
