@@ -4,8 +4,8 @@ import banking.exception.InsufficientFundsException;
 import banking.model.IBankAccount;
 
 public class BankAccount implements IBankAccount {
-    private String accountNumber;
-    private String accountHolderName;
+    private final String accountNumber;
+    private final String accountHolderName;
     private double balance;
 
     public BankAccount(String accountNumber,
@@ -39,8 +39,7 @@ public class BankAccount implements IBankAccount {
     public void deposit(double amount) {
         if (amount > 0) {
             this.balance += amount;
-        }
-        else {
+        } else {
             throw new IllegalArgumentException("Deposit amount must be greater than 0");
         }
     }

@@ -30,10 +30,10 @@ public class SavingsAccount extends BankAccount {
     public void withdraw(double amount) {
         if (amount <= 0) {
             throw new InsufficientFundsException("Insufficient funds for withdrawal");
-        } else if (getBalance() - amount < minimumBalance) {
+        } else if (this.getBalance() - amount < minimumBalance) {
             throw new InvalidTransactionException("Invalid transaction for withdrawal");
         } else {
-            setBalance(getBalance() - amount);
+            setBalance(this.getBalance() - amount);
         }
     }
 
