@@ -1,4 +1,4 @@
-package banking.entity;
+package banking.model.impl;
 
 public class SavingsAccount extends BankAccount {
     private double interestRate;

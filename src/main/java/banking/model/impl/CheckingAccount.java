@@ -1,8 +1,8 @@
-package banking.entity;
+package banking.model.impl;
 
 import banking.exception.InsufficientFundsException;
 
-public class CheckingAccount extends BankAccount{
+public class CheckingAccount extends BankAccount {
 
     private double overdraftLimit;
 
@@ -10,7 +10,7 @@ public class CheckingAccount extends BankAccount{
                            String accountHolderName,
                            double overdraftLimit) {
         super(accountNumber, accountHolderName);
-        this.overdraftLimit = overdraftLimit;
+        setOverdraftLimit(overdraftLimit);
     }
 
     public CheckingAccount(String accountNumber,
@@ -18,21 +18,28 @@ public class CheckingAccount extends BankAccount{
                            double balance,
                            double overdraftLimit) {
         super(accountNumber, accountHolderName, balance);
-        this.overdraftLimit = overdraftLimit;
+        setOverdraftLimit(overdraftLimit);
     }
 
     public double getOverdraftLimit() {
         return overdraftLimit;
     }
 
+    public void setOverdraftLimit(double overdraftLimit) {
+        if (overdraftLimit < 0) {
+            throw new IllegalArgumentException("Overdraft limit cannot be negative");
+        }
+        this.overdraftLimit = overdraftLimit;
+    }
+
     @Override
     public void withdraw(double amount) {
-        if(amount <= 0) {
+        if (amount <= 0) {
             throw new InsufficientFundsException("Insufficient funds for withdrawal");
-        } else if(amount > getBalance() + overdraftLimit) {
+        } else if (amount > getBalance() + overdraftLimit) {
             throw new InsufficientFundsException("Insufficient funds for withdrawal");
         } else {
-            if(amount > this.getBalance()) {
+            if (amount > this.getBalance()) {
                 double overdraftWithdrawal = amount - getBalance();
                 setBalance(0);
                 overdraftLimit -= overdraftWithdrawal;

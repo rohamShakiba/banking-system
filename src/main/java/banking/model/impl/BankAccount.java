@@ -1,6 +1,7 @@
-package banking.entity;
+package banking.model.impl;
 
 import banking.exception.InsufficientFundsException;
+import banking.model.IBankAccount;
 
 public class BankAccount implements IBankAccount {
     private String accountNumber;
@@ -20,6 +21,10 @@ public class BankAccount implements IBankAccount {
         this.accountNumber = accountNumber;
         this.accountHolderName = accountHolderName;
         this.balance = balance;
+    }
+
+    public String getAccountNumber() {
+        return accountNumber;
     }
 
     public double getBalance() {

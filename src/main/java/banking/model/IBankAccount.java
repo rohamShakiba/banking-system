@@ -1,4 +1,4 @@
-package banking.entity;
+package banking.model;
 
 public interface IBankAccount {
     void deposit(double amount);

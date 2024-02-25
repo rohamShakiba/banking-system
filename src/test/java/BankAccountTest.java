@@ -1,7 +1,7 @@
 import static org.junit.Assert.assertEquals;
 import org.junit.Before;
 import org.junit.Test;
-import banking.entity.BankAccount;
+import banking.model.impl.BankAccount;
 import banking.exception.InsufficientFundsException;
 
 public class BankAccountTest {
