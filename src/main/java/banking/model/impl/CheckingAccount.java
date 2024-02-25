@@ -1,6 +1,7 @@
 package banking.model.impl;
 
 import banking.exception.InsufficientFundsException;
+import banking.exception.InvalidTransactionException;
 
 public class CheckingAccount extends BankAccount {
 
@@ -37,7 +38,7 @@ public class CheckingAccount extends BankAccount {
         if (amount <= 0) {
             throw new InsufficientFundsException("Insufficient funds for withdrawal");
         } else if (amount > getBalance() + overdraftLimit) {
-            throw new InsufficientFundsException("Insufficient funds for withdrawal");
+            throw new InvalidTransactionException("Invalid transaction for withdrawal");
         } else {
             if (amount > this.getBalance()) {
                 double overdraftWithdrawal = amount - getBalance();
@@ -47,5 +48,11 @@ public class CheckingAccount extends BankAccount {
                 setBalance(getBalance() - amount);
             }
         }
+    }
+
+    public void deductFees() {
+        double TRANSACTION_FEE_RATE = 1.5;
+        double fee = this.getBalance() * TRANSACTION_FEE_RATE;
+        withdraw(fee);
     }
 }
