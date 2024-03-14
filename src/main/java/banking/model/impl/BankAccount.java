@@ -46,7 +46,10 @@ public class BankAccount implements IBankAccount {
 
     @Override
     public void withdraw(double amount) {
-        if ((amount <= 0) || (amount > this.balance)) {
+        if (amount <= 0) {
+            throw new IllegalArgumentException("Withdrawal amount must be greater than 0!");
+        }
+        else if (amount > this.balance) {
             throw new InsufficientFundsException("Insufficient funds for withdrawal");
         }
         else {
