@@ -40,4 +40,10 @@ public class CheckingAccountTest {
     public void testWithdrawNegativeAmount() {
         checkingAccount.withdraw(-500.0);
     }
+
+    @Test
+    public void testDeductFees() {
+        checkingAccount.deductFees(3500, "withdraw");
+        assertEquals(35, checkingAccount.deductFees(3500, "withdraw"), 0.01);
+    }
 }
