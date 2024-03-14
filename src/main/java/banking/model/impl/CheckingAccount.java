@@ -3,9 +3,15 @@ package banking.model.impl;
 import banking.exception.InsufficientFundsException;
 import banking.exception.InvalidTransactionException;
 
+import java.util.Objects;
+
 public class CheckingAccount extends BankAccount {
 
     private double overdraftLimit;
+
+    private static final double DEPOSIT_FEE_RATE = 0.01;
+    private static final double WITHDRAW_FEE_MIN = 20;
+    private static final double WITHDRAW_FEE_STEP = 5;
 
     public CheckingAccount(String accountNumber,
                            String accountHolderName,
@@ -50,9 +56,21 @@ public class CheckingAccount extends BankAccount {
         }
     }
 
-    public void deductFees() {
-        double TRANSACTION_FEE_RATE = 1.5;
-        double fee = this.getBalance() * TRANSACTION_FEE_RATE;
-        withdraw(fee);
+    public double deductFees(double amount,
+                           String transactionType) {
+        double fee = 0;
+
+        if (Objects.equals(transactionType, "deposit")) {
+            fee = amount * DEPOSIT_FEE_RATE;
+
+            if (fee < 10) {
+                fee = 10;
+            } else if (fee > 100) {
+                fee = 100;
+            }
+        } else if (Objects.equals(transactionType, "withdraw")) {
+            fee = WITHDRAW_FEE_MIN + (Math.ceil(amount/1000) - 1) * WITHDRAW_FEE_STEP;
+        }
+        return fee;
     }
 }
