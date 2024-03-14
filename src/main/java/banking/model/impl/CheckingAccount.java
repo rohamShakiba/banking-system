@@ -44,7 +44,7 @@ public class CheckingAccount extends BankAccount {
         if (amount > 0) {
             amount -= this.deductFees(amount, "deposit");
             if (amount <= 0) {
-                throw new InvalidTransactionException("Unable to deduct fees");
+                throw new InsufficientFundsException("Insufficient funds for deduct fees");
             } else { super.deposit(amount);}
         } else {
             throw new IllegalArgumentException("Deposit amount must be greater than 0!");
