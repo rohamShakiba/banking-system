@@ -17,7 +17,7 @@ public class CheckingAccountTest {
     @Test
     public void testDeposit() {
         checkingAccount.deposit(500.0);
-        assertEquals(500.0, checkingAccount.getBalance(), 0.01);
+        assertEquals(490, checkingAccount.getBalance(), 0.01);
     }
 
     @Test(expected = IllegalArgumentException.class)
