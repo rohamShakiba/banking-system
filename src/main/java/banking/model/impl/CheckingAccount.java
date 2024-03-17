@@ -68,7 +68,7 @@ public class CheckingAccount extends BankAccount {
         }
     }
 
-    public double deductFees(double amount,
+    public void deductFees(double amount,
                            String transactionType) {
         double fee = 0;
 
@@ -83,6 +83,6 @@ public class CheckingAccount extends BankAccount {
         } else if (Objects.equals(transactionType, "withdraw")) {
             fee = WITHDRAW_FEE_MIN + (Math.ceil(amount/1000) - 1) * WITHDRAW_FEE_STEP;
         }
-        return fee;
+        super.deductFees(fee);
     }
 }
