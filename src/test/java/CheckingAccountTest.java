@@ -11,13 +11,13 @@ public class CheckingAccountTest {
 
     @Before
     public void setUp() {
-        checkingAccount = new CheckingAccount("123456789", "Morteza Mohammadi", 5000);
+        checkingAccount = new CheckingAccount("123456789", "Morteza Mohammadi",1000, 5000);
     }
 
     @Test
     public void testDeposit() {
         checkingAccount.deposit(500.0);
-        assertEquals(490, checkingAccount.getBalance(), 0.01);
+        assertEquals(1490, checkingAccount.getBalance(), 0.01);
     }
 
     @Test(expected = IllegalArgumentException.class)
@@ -27,7 +27,7 @@ public class CheckingAccountTest {
 
     @Test
     public void testWithdraw() {
-        checkingAccount.withdraw(500.0);
+        checkingAccount.withdraw(1500.0);
         assertEquals(4500.0, checkingAccount.getOverdraftLimit(), 0.01);
     }
 
@@ -43,7 +43,8 @@ public class CheckingAccountTest {
 
     @Test
     public void testDeductFees() {
-        checkingAccount.deductFees(3500, "withdraw");
-        assertEquals(35, checkingAccount.deductFees(3500, "withdraw"), 0.01);
+        double balance = checkingAccount.getBalance();
+        checkingAccount.deductFees(3500, "deposit");
+        assertEquals(balance - 35, checkingAccount.getBalance(), 0.01);
     }
 }
