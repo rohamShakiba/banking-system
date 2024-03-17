@@ -42,10 +42,8 @@ public class CheckingAccount extends BankAccount {
     @Override
     public void deposit(double amount) {
         if (amount > 0) {
-            amount -= this.deductFees(amount, "deposit");
-            if (amount <= 0) {
-                throw new InsufficientFundsException("Insufficient funds for deduct fees");
-            } else { super.deposit(amount);}
+            this.deductFees(amount, "deposit");
+            super.deposit(amount);
         } else {
             throw new IllegalArgumentException("Deposit amount must be greater than 0!");
         }
