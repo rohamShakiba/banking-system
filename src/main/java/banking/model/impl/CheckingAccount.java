@@ -52,16 +52,20 @@ public class CheckingAccount extends BankAccount {
     @Override
     public void withdraw(double amount) {
         if (amount <= 0) {
-            throw new InsufficientFundsException("Insufficient funds for withdrawal");
-        } else if (amount > getBalance() + overdraftLimit) {
-            throw new InvalidTransactionException("Invalid transaction for withdrawal");
+            throw new IllegalArgumentException("Withdrawal amount must be greater than 0!");
         } else {
-            if (amount > this.getBalance()) {
-                double overdraftWithdrawal = amount - getBalance();
-                setBalance(0);
-                overdraftLimit -= overdraftWithdrawal;
+            double balance = this.getBalance();
+            double fee = this.calculateFees(amount, "withdraw");
+            if (amount + fee > balance + this.overdraftLimit) {
+                throw new InsufficientFundsException("Insufficient funds for withdrawal!");
             } else {
-                setBalance(getBalance() - amount);
+                super.deductFees(fee);
+                balance = this.getBalance();
+                if (amount > balance) {
+                    this.setBalance(balance - amount);
+                } else {
+                    super.withdraw(amount);
+                }
             }
         }
     }
