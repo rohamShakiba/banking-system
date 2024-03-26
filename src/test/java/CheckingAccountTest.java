@@ -28,15 +28,15 @@ public class CheckingAccountTest {
     @Test
     public void testWithdraw() {
         checkingAccount.withdraw(1500.0);
-        assertEquals(4500.0, checkingAccount.getOverdraftLimit(), 0.01);
+        assertEquals(-525.0, checkingAccount.getBalance(), 0.01);
     }
 
-    @Test(expected = InvalidTransactionException.class)
+    @Test(expected = InsufficientFundsException.class)
     public void testWithdrawInsufficientFunds() {
         checkingAccount.withdraw(50000.0);
     }
 
-    @Test(expected = InsufficientFundsException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void testWithdrawNegativeAmount() {
         checkingAccount.withdraw(-500.0);
     }
