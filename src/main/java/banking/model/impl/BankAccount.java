@@ -57,13 +57,16 @@ public class BankAccount implements IBankAccount {
         }
     }
 
-    public void deductFees(double fee) {
+    public boolean deductFees(double fee) {
+        boolean isSuccessful = false;
         if (fee <= 0) {
             throw new IllegalArgumentException("Invalid fee for deduction!");
         } else if (this.balance < fee){
             throw new InsufficientFundsException("Insufficient funds for deducting fees!");
         } else {
             this.balance -= fee;
+            isSuccessful = true;
         }
+        return isSuccessful;
     }
 }
