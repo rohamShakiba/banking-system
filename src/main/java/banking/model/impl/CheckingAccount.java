@@ -52,8 +52,6 @@ public class CheckingAccount extends BankAccount {
             } else {
                 throw new IllegalArgumentException("Deposit amount must be greater than 0!");
             }
-        } catch (Exception exception) {
-            System.out.println(exception.getMessage());
         } finally {
             if (!isDoneDeductFees) {
                 this.returnFees(fee);
@@ -84,8 +82,6 @@ public class CheckingAccount extends BankAccount {
                     }
                 }
             }
-        } catch (Exception exception) {
-            System.out.println(exception.getMessage());
         } finally {
             if (!isDoneDeductFees) {
                 this.returnFees(fee);
