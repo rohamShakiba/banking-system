@@ -41,11 +41,22 @@ public class CheckingAccount extends BankAccount {
 
     @Override
     public void deposit(double amount) {
-        if (amount > 0) {
-            this.deductFees(amount, "deposit");
-            super.deposit(amount);
-        } else {
-            throw new IllegalArgumentException("Deposit amount must be greater than 0!");
+        boolean isDoneDeductFees = false;
+        try {
+            if (amount > 0) {
+                isDoneDeductFees = this.deductFees(amount, "deposit");
+                if (isDoneDeductFees) {
+                    super.deposit(amount);
+                }
+            } else {
+                throw new IllegalArgumentException("Deposit amount must be greater than 0!");
+            }
+        } catch (Exception exception) {
+            System.out.println(exception.getMessage());
+        } finally {
+            if (!isDoneDeductFees) {
+                this.returnFees(fee);
+            }
         }
     }
 
@@ -88,9 +99,14 @@ public class CheckingAccount extends BankAccount {
         return fee;
     }
 
-    public void deductFees(double amount,
+    public boolean deductFees(double amount,
                            String transactionType) {
         double fee = this.calculateFees(amount, transactionType);
-        super.deductFees(fee);
+        return super.deductFees(fee);
+    }
+
+    public void returnFees(double fee) {
+        double balance = this.getBalance();
+        this.setBalance(balance + fee);
     }
 }
