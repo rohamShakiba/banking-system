@@ -42,9 +42,10 @@ public class CheckingAccount extends BankAccount {
     @Override
     public void deposit(double amount) {
         boolean isDoneDeductFees = false;
+        double fee = this.calculateFees(amount, "deposit");
         try {
             if (amount > 0) {
-                isDoneDeductFees = this.deductFees(amount, "deposit");
+                isDoneDeductFees = super.deductFees(fee);
                 if (isDoneDeductFees) {
                     super.deposit(amount);
                 }
@@ -97,12 +98,6 @@ public class CheckingAccount extends BankAccount {
             fee = WITHDRAW_FEE_MIN + (Math.ceil(amount/1000) - 1) * WITHDRAW_FEE_STEP;
         }
         return fee;
-    }
-
-    public boolean deductFees(double amount,
-                           String transactionType) {
-        double fee = this.calculateFees(amount, transactionType);
-        return super.deductFees(fee);
     }
 
     public void returnFees(double fee) {
