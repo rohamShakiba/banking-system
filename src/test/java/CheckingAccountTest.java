@@ -42,9 +42,9 @@ public class CheckingAccountTest {
     }
 
     @Test
-    public void testDeductFees() {
+    public void testCalculateFees() {
         double balance = checkingAccount.getBalance();
-        checkingAccount.deductFees(3500, "deposit");
-        assertEquals(balance - 35, checkingAccount.getBalance(), 0.01);
+        double fee = checkingAccount.calculateFees(3500, "deposit");
+        assertEquals( fee, 35.0, 0.01);
     }
 }
