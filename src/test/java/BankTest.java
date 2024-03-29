@@ -1,4 +1,3 @@
-import banking.model.IBank;
 import banking.model.impl.Bank;
 import banking.model.impl.BankAccount;
 import banking.model.impl.SavingsAccount;
@@ -12,7 +11,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 public class BankTest {
-    private IBank bank;
+    private Bank bank;
     @Before
     public void setUp() {
         Map<String, BankAccount> bankAccountMap = new HashMap<>();
@@ -32,6 +31,14 @@ public class BankTest {
         SavingsAccount savingsAccount = new SavingsAccount("123456789", "Roham Shakiba", 2.0, 2000.0);
         boolean result = bank.addAccount(savingsAccount);
         assertFalse(result);
+    }
+
+    @Test
+    public void testReadAndWriteBankFromAndToFile() {
+        SavingsAccount savingsAccount = new SavingsAccount("213456789", "Roham Shakiba", 2.0, 2000.0);
+        bank.addAccount(savingsAccount);
+        bank.writeBankToFile();
+        bank.readBankFromFile();
     }
 
 
