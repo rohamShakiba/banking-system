@@ -3,7 +3,9 @@ package banking.model.impl;
 import banking.exception.InsufficientFundsException;
 import banking.model.IBankAccount;
 
-public class BankAccount implements IBankAccount {
+import java.io.Serializable;
+
+public class BankAccount implements IBankAccount, Serializable {
     private final String accountNumber;
     private final String accountHolderName;
     private double balance;
@@ -68,5 +70,17 @@ public class BankAccount implements IBankAccount {
             isSuccessful = true;
         }
         return isSuccessful;
+    }
+
+    @Override
+    public String toString() {
+        return "\nAccount Number: " + this.getAccountNumber() +
+                "\nbelongs to: " + this.getAccountHolderName() +
+                "\nwith the balance of: " + this.getBalance() +
+                "\n*****************************\n";
+    }
+
+    public String getAccountHolderName() {
+        return accountHolderName;
     }
 }
