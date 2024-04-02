@@ -3,7 +3,9 @@ package banking.model.impl;
 import banking.exception.InsufficientFundsException;
 import banking.model.IBankAccount;
 
-public class BankAccount implements IBankAccount {
+import java.io.Serializable;
+
+public class BankAccount implements IBankAccount, Serializable {
     private final String accountNumber;
     private final String accountHolderName;
     private double balance;
@@ -46,11 +48,39 @@ public class BankAccount implements IBankAccount {
 
     @Override
     public void withdraw(double amount) {
-        if ((amount <= 0) || (amount > this.balance)) {
+        if (amount <= 0) {
+            throw new IllegalArgumentException("Withdrawal amount must be greater than 0!");
+        }
+        else if (amount > this.balance) {
             throw new InsufficientFundsException("Insufficient funds for withdrawal");
         }
         else {
             this.balance -= amount;
         }
+    }
+
+    public boolean deductFees(double fee) {
+        boolean isSuccessful = false;
+        if (fee <= 0) {
+            throw new IllegalArgumentException("Invalid fee for deduction!");
+        } else if (this.balance < fee){
+            throw new InsufficientFundsException("Insufficient funds for deducting fees!");
+        } else {
+            this.balance -= fee;
+            isSuccessful = true;
+        }
+        return isSuccessful;
+    }
+
+    @Override
+    public String toString() {
+        return "\nAccount Number: " + this.getAccountNumber() +
+                "\nbelongs to: " + this.getAccountHolderName() +
+                "\nwith the balance of: " + this.getBalance() +
+                "\n*****************************\n";
+    }
+
+    public String getAccountHolderName() {
+        return accountHolderName;
     }
 }
